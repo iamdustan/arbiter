@@ -1,3 +1,6 @@
+/*! arbiter v0.0.1 https://github.com/iamdustan/arbiter | MIT License */
+
+
 !function(name, definition) {
   if (typeof module !== 'undefined') module.exports = definition()
   else if (typeof define === 'function' && define.amd) define(name, definition)

@@ -3,4 +3,4 @@
   var a = require('arbiter')
 
   $.ender(a)
-})(ender)
+}(ender))
