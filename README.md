@@ -11,7 +11,7 @@ path you’d like to load.
 
 ### Basic usage
 
-```
+``` javascript
 $('body').delegate('#slider a', 'click', function (e) {
   e.stop()
   $.change(this.href)
@@ -19,7 +19,7 @@ $('body').delegate('#slider a', 'click', function (e) {
 ```
 
 ### Set your own success callback and animation
-```
+``` javascript
 $('body').delegate('#slider a', 'click', function (e) {
   e.stop()
   $.change(this.href, function (data) {
@@ -29,7 +29,7 @@ $('body').delegate('#slider a', 'click', function (e) {
 ```
 
 ### Set ajax method and type
-```
+``` javascript
 $('body').delegate('#slider a', 'click', function (e) {
   e.stop()
   $.change(this.href, { method: 'POST', type: 'json', function (data) {
