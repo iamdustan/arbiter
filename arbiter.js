@@ -1,7 +1,7 @@
-/*! arbiter v0.0.1 https://github.com/iamdustan/arbiter | MIT License */
+/*! arbiter v0.0.2 https://github.com/iamdustan/arbiter | MIT License */
 
 
-!function(name, definition) {
+(function (name, definition) {
   if (typeof module !== 'undefined') module.exports = definition()
   else if (typeof define === 'function' && define.amd) define(name, definition)
   else this[name] = definition()
@@ -10,53 +10,75 @@
   var $ = window.ender
     , arbiter = {}
     , pageState = {}
-    , merge = function(o, o2) {
+    , merge = function (o, o2) {
         for (var k in o2) if (k.isOwnPropery(o2)) o[k] = o2[k]
         return o
       }
-    , changePage = function(page, type, reverse) {
+    , defaults = function (o, o2) {
+        for (var k in o2) if (!o[k]) o[k] = o2[k]
+        return o
+      }
+    , setPrevious = function(options) {
         // update previous transition to be next transition
-        if (pageState.state) { pageState.state.transition = type }
+        if (pageState.state) pageState.state.transition = options.type
         else {
           pageState = {
             state: { page: location.pathname, transition: undefined, reverse: undefined }
-          , title: '', url: location.pathname
+          , title: ''
+          , url: location.pathname
           }
         }
-        history.replaceState(pageState.state, pageState.title, pageState.url)
 
+        history.replaceState(pageState.state, pageState.title, pageState.url)
+      }
+    , setState = function(options) {
         // keep state details for next time
         pageState = {
           state: {
-            page: page
-          , transition: type
-          , reverse: reverse
+            page: options.page
+          , transition: options.type
+          , reverse: options.reverse
           }
         , title: ''
-        , url: page
+        , url: options.page
         }
 
         history.pushState(pageState.state, pageState.title, pageState.url)
-        getPage()
       }
-    , getPage = function(ajax) {
-        $.ajax.compat && $.ender({ ajax: $.ajax.compat });
-        ajax = merge({
+    , changePage = function (page, options) {
+        // set callback function to getPage if none are built in
+        var success;
+        if (typeof options === 'function') success = options
+        options = options || {}
+        defaults(options, {
+          type: null,
+          reverse: null,
+          page: page,
+          success: success
+        })
+
+        setPrevious(options)
+        setState(options)
+        getPage(options)
+      }
+    , getPage = function (ajax) {
+        ajax = defaults(ajax || {}, {
           url: pageState.url,
-          dataType: 'html',
-          type: 'get',
-          success: function (html) {
-            $('#slider').html($(html).find('#slider').html())
+          type: 'html',
+          method: 'get',
+          success: function (data) {
+            $('#slider').html($(data).find('#slider').html())
           }
-        }, ajax)
+        })
         $.ajax(ajax)
       }
 
   if ('addEventListener' in window) {
-    window.addEventListener('popstate', function(e) {
+    window.addEventListener('popstate', function (e) {
 
       // ignore popstate thrown on page load
       if (!e.state) { return }
+
       //transition(e.state.page, e.state.transition, !e.state.reverse)
       pageState = {
         state: {
@@ -65,12 +87,14 @@
         , reverse: e.state.reverse
         }
       , title: ''
-      ,  url: e.state.page
+      , url: e.state.page
       }
       getPage()
+
     }, false)
   }
 
   arbiter.change = changePage;
   return arbiter
-})
+}));
+

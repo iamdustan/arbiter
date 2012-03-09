@@ -1,7 +1,7 @@
 {
   "name": "arbiter"
 , "description": "Lightweight html5 history pushState library"
-, "version" : "0.0.1"
+, "version" : "0.0.2"
 , "homepage": "https://github.com/iamdustan/arbiter"
 , "author": "Dustan Kasten <dustan.kasten@gmail.com> @iamdustan"
 , "keywords": ["ender", "history", "pushState", "html5"]
