@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/iamdustan/arbiter.png)](http://travis-ci.org/iamdustan/arbiter)
 
 # be the arbiter of your history
 Arbiter is a super-lightweight enhancement library for your html5 apps.
