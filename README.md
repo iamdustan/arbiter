@@ -1,10 +1,12 @@
-
 # be the arbiter of your history
 Arbiter is a super-lightweight enhancement library for your html5 apps.
 This isn’t a catch-all-own-the-world solution like History.js by
 balupton
 
 ## usage
+
+**DO NOT USE**. This project is not maintained.
+
 To be used with ender and being dependent upon a dom utility, event,
 and ajax libs, it’s as simple as calling the $.change function with the
 path you’d like to load.
